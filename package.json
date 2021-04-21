@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "parcel app/client/index.html",
     "build": "parcel build .",
-    "start": "node dist/server/index.js"
+    "start": "electron dist/server/index.js"
   },
   "client": "dist/client/index.html",
   "server": "dist/server/index.js",
@@ -15,8 +15,8 @@
       "context": "browser"
     },
     "server": {
-      "source": "app/server/index.ts",
-      "context": "node"
+      "source": "app/server/window.ts",
+      "context": "electron-main"
     }
   },
   "repository": {
@@ -43,6 +43,7 @@
     "ws": "^7.4.4"
   },
   "devDependencies": {
+    "electron": "^12.0.5",
     "lezer-generator": "^0.13.3",
     "parcel": "^2.0.0-beta.2"
   }

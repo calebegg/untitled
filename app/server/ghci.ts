@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 
-const ghci = spawn("ghci");
+export const ghci = spawn("ghci");
 
 ghci.stdout.on("data", (data) => {
   data = data.toString("utf-8");
