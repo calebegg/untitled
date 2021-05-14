@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron");
-const path = require("path");
+
+import { ipcMain } from "electron";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -24,4 +25,8 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+ipcMain.on("ghci", (event, ...args) => {
+  console.log(args);
 });
