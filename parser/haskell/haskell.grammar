@@ -1,0 +1,13 @@
+@top program { literal }
+
+literal { integer | float }
+
+@tokens {
+  decimal { $[0-9]+ }
+  octal { $[0-7]+ }
+  hexadecimal { $[0-9A-Fa-f]+ }
+  integer { decimal | "0" ("o" | "O") octal | "0" ("x" | "X") hexadecimal }
+  float { decimal "." decimal exponent? | decimal exponent }
+  exponent { ("e" | "E") ("+" | "-")? decimal }
+  @precedence { float, integer }
+}
