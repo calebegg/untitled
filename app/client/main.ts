@@ -13,14 +13,17 @@ socket.addEventListener("open", () => {
   });
 });
 
+import { underlineSelection } from "./highlights";
+
 let commands: KeyBinding[] = [
   {
     key: "Shift-Enter",
-    run: ({ state, dispatch }) => {
+    run: (view) => {
+      const { state } = view;
       if (socket.readyState === WebSocket.OPEN) {
         let { from } = state.selection.main;
         socket.send(state.doc.lineAt(from).text);
-        return true;
+        return underlineSelection(view);
       } else {
         return false;
       }
