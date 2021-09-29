@@ -6,6 +6,7 @@ import { playMIDI } from "./midi";
 
 import { Editor } from "./editor";
 import { Terminal, TerminalMessage } from "./Terminal";
+import { Footer } from "./Footer";
 
 function App() {
   const [feed, setFeed] = useState<TerminalMessage[]>([]);
@@ -32,8 +33,11 @@ function App() {
 
   return (
     <>
-      <Editor />
-      <Terminal feed={feed} />
+      <main>
+        <Editor />
+        <Terminal feed={feed} />
+      </main>
+      <Footer />
     </>
   );
 }

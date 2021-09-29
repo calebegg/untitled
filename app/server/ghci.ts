@@ -2,7 +2,7 @@ import { createSocket } from "dgram";
 import { spawn, ChildProcessWithoutNullStreams } from "child_process";
 import { createInterface } from "readline";
 
-import { message } from "../osc/osc";
+import { getMessages, message } from "../osc/osc";
 
 import bootCode from "bundle-text:./BootTidal.hs";
 
@@ -44,11 +44,19 @@ export class GHCI {
       this.process.on("close", (code) => {
         console.log(`child process exited with code ${code}`);
       });
+
+      // Subscribe to tempo messages
+      setTimeout(() => {
+        this.socket.send(message("/hello"), 9160);
+      }, 3000);
     });
 
     this.socket.on("message", (data) => {
-      console.log("Received osc message");
       callback(data);
+
+      for (let address of getMessages(data).map((m) => m.address)) {
+        console.log(`OSC: ${address}`);
+      }
     });
   }
 
