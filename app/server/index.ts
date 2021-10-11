@@ -1,5 +1,8 @@
+//@ts-ignore
 import { Server as FileServer } from "node-static";
 import { createServer } from "http";
+
+import { parse } from "../osc/osc";
 
 const fileServer = new FileServer("./dist/client");
 
@@ -12,17 +15,31 @@ createServer(function (request, response) {
 }).listen(1234);
 
 import { Server as WebSocketServer } from "ws";
+import { GHCI } from "./ghci";
 
 const wss = new WebSocketServer({ port: 4567 });
 
 wss.on("connection", (ws) => {
-  ws.on("message", function incoming(message) {
-    console.log("received: %s", message);
+  const ghci = new GHCI((data) => {
+    ws.send(data);
   });
 
-  ws.send("Received Connection!");
+  ws.on("message", (message) => {
+    if (message instanceof Buffer) {
+      let osc = parse(message);
+      if (
+        "address" in osc &&
+        osc.address === "/tidal/code" &&
+        typeof osc.args[0] === "string"
+      ) {
+        let code = osc.args[0];
+        console.log(`UI: "${code}"`);
+        ghci.send(code);
+      }
+    }
+  });
+
+  ws.on("close", () => {
+    ghci.close();
+  });
 });
-
-import { ghci } from "./ghci";
-
-ghci;
