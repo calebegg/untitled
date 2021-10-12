@@ -30,6 +30,12 @@ function App() {
     return listenForOSC("/midi/play", playMIDI);
   }, []);
 
+  useEffect(() => {
+    return listenForOSC("/highlights", ({ args }) => {
+      console.log(`Highlight: ${JSON.stringify(args)}`);
+    });
+  });
+
   return (
     <>
       <Editor />

@@ -21,10 +21,13 @@ let midiTarget =
              
     midiShape =
       OSC "/midi/play" $ Named {requiredArgs = ["d"]}
+      
+    highlightShape = 
+      OSCContext "/highlights"
 :}
 
 -- total latency = oLatency + cFrameTimespan
-tidal <- startStream (defaultConfig {cVerbose = True, cFrameTimespan = 1/20}) [(midiTarget, [midiShape])]
+tidal <- startStream (defaultConfig {cVerbose = True, cFrameTimespan = 1/20}) [(midiTarget, [midiShape, highlightShape])]
 
 :{
 let only = (hush >>)
