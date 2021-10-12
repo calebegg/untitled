@@ -6,6 +6,7 @@ import { playMIDI } from "./midi";
 
 import { Editor } from "./editor";
 import { Terminal, TerminalMessage } from "./Terminal";
+import { ShaderCanvas } from "./canvas";
 
 function App() {
   const [feed, setFeed] = useState<TerminalMessage[]>([]);
@@ -34,6 +35,7 @@ function App() {
     <>
       <Editor />
       <Terminal feed={feed} />
+      <ShaderCanvas />
     </>
   );
 }
