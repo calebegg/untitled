@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Experimental Tidal Cycles editor",
   "scripts": {
+    "css-types": "tcm -p '**/*.module.css' app",
     "build": "parcel build .",
     "start": "node dist/server/index.js"
   },
@@ -50,6 +51,7 @@
     "@types/webmidi": "^2.0.6",
     "@types/ws": "^7.4.1",
     "lezer-generator": "^0.13.3",
-    "parcel": "^2.0.0-rc.0"
+    "parcel": "^2.0.0-rc.0",
+    "typed-css-modules": "^0.7.0"
   }
 }
